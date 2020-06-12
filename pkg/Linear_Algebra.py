@@ -11,7 +11,7 @@ def x_hat(A, b):
     aTa_inv = inv(aTa)
     return aTa_inv.dot(A.T).dot(b)
 
-def project(A, b):
+def project(A=None, b=None):
     '''
     * is dot product
     p = P*b = a*inv(aT*a)*aT*b
@@ -22,20 +22,45 @@ def project(A, b):
     p = A.dot(x_bar).dot(b)
     return p, x_bar
 
+def input_to_mx(i):
+    return np.array(eval(i))
+
+def run_cmd(parsed_arg, cmd_name):
+    '''
+    gather arguments for each sub-commands
+    and parse arguments into correct data type
+    '''
+    cmd = eval(getattr(parsed_arg, cmd_name))
+    _, *keys= parsed_arg.__dict__.keys()
+    _, *values = parsed_arg.__dict__.values()
+    transformed_values = [input_to_mx(each) for each in values if each.strip().startswith('[')]
+    a = dict(zip(keys, transformed_values))
+    return cmd(**a)
+
+def show(result):
+    print(result)
+
 def main():
     arg = argparse.ArgumentParser(description='Calculations in Linear Algebra')
-    sub_parsers = arg.add_subparsers(help='projection', dest='command')
-    projection_args = sub_parsers.add_parser('project')
+    sub_parsers = arg.add_subparsers(
+        title='calculation',
+        description='enter the calculation to be done',
+        help='calculations',
+        dest='command',
+        required=True
+    )
+
+    ###projection###
+    projection_args = sub_parsers.add_parser('project', help='project help')
     projection_args.add_argument('-A', '--A', help='matrix to be projected on. example: [[1,2,3], [1,2,3]] is a 2x3 matrix.')
     projection_args.add_argument('-b', '--b', help='matrix to poject')
 
-    arbi = sub_parsers.add_parser('arb')
-    arbi.add_argument('-A', '--A')
+    args = arg.parse_args()
+    
+    result = run_cmd(args, 'command')
+    show(result)
+    
 
-    a = arg.parse_args()
-
-    if a.command == 'project':
-        print(project(np.array(eval(a.A)), np.array(eval(a.b))))
 
 
 if __name__ == '__main__':
