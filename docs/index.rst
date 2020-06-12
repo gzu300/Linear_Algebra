@@ -11,6 +11,7 @@ Welcome to ZhuGC_study_math's documentation!
    :caption: Contents:
 
    projection
+   LeastSquare
 
 
 Indices and tables
