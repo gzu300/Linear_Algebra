@@ -10,6 +10,7 @@ Welcome to ZhuGC_study_math's documentation!
    :maxdepth: 2
    :caption: Contents:
 
+   projection
 
 
 Indices and tables
@@ -18,3 +19,4 @@ Indices and tables
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+.. * :ref:`projection`
