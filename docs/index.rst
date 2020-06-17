@@ -12,6 +12,7 @@ Welcome to ZhuGC_study_math's documentation!
 
    projection
    LeastSquare
+   LUfactorization
 
 
 Indices and tables
